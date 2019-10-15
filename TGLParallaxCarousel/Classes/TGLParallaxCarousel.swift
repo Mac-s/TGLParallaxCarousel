@@ -42,7 +42,7 @@ open class TGLParallaxCarousel: UIView {
             reloadData()
         }
     }
-    open var type: CarouselType = .threeDimensional {
+    open var carouselType: CarouselType = .threeDimensional {
         didSet {
             reloadData()
         }
@@ -80,17 +80,17 @@ open class TGLParallaxCarousel: UIView {
     }
     
     var xDisplacement: CGFloat {
-        if type == .normal {
+        if carouselType == .normal {
             if let _ = itemWidth { return itemWidth! }
             else { return 0 }
         }
-        else if type == .threeDimensional { return 50 }        // TODO
+        else if carouselType == .threeDimensional { return 50 }        // TODO
         else { return 0 }
     }
     
     var zDisplacementFactor: CGFloat {
-        if type == .normal { return 0 }
-        else if type == .threeDimensional { return 1 }
+        if carouselType == .normal { return 0 }
+        else if carouselType == .threeDimensional { return 1 }
         else { return 0 }
     }
     
@@ -126,13 +126,12 @@ open class TGLParallaxCarousel: UIView {
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = Bundle(for: TGLParallaxCarousel.self)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: nibName, bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
-    
-    
+
     // MARK: - view lifecycle
     override open func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
